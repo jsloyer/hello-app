@@ -12,9 +12,6 @@ spec:
     protocol: TCP
     name: web
     targetPort: 8080
-  env:
-    - name: message
-      value: "Hello World!"
   selector:
     run: logistics-app
   type: LoadBalancer
@@ -29,6 +26,11 @@ metadata:
   namespace: logistics
 spec:
   replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
   selector:
     matchLabels:
       run: logistics-app
@@ -40,6 +42,19 @@ spec:
       containers:
       - image: jsloyer/hello-app:latest
         name: logistics-app
+        ports:
+          - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+        env:
+          - name: message
+            value: "Hello Everyone!"
         resources:
           limits:
             cpu: "50m"
