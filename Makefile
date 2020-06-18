@@ -1,4 +1,4 @@
-REPO ?= jsloyer/web-ms
+REPO ?= jsloyer/hello-app
 TAG ?= $(shell git rev-parse --short HEAD)
 IMAGE := $(REPO):$(TAG)
 LATEST_IMAGE := $(REPO):latest
