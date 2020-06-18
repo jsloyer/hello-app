@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: logistics-app
+    razee/watch-resource: "true"
+  name: logistics-svc
+  namespace: logistics
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    name: web
+    targetPort: 8080
+  env:
+    - name: message
+      value: "Hello World!"
+  selector:
+    run: logistics-app
+  type: LoadBalancer
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: logistics-app
+    razee/watch-resource: "true"
+  name: logistics-app
+  namespace: logistics
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: logistics-app
+  template:
+    metadata:
+      labels:
+        run: logistics-app
+    spec:
+      containers:
+      - image: jsloyer/hello-app:latest
+        name: logistics-app
+        resources:
+          limits:
+            cpu: "50m"
+            memory: "100Mi"
