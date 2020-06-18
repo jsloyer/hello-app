@@ -1,4 +1,7 @@
-language: python
+language: go
+
+go:
+- 1.13.5
 
 services:
   - docker
@@ -7,4 +10,5 @@ before_install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 script:
+  - make buildgo
   - make all

@@ -1,8 +1,17 @@
-FROM python:3.7-alpine
-COPY hello_world.py /app
-WORKDIR /app
+FROM golang:1.13.5 as builder
+
+WORKDIR /hello-app
+
+COPY . ./
+RUN make buildgo
+
+
+FROM scratch
+
+WORKDIR /
+
+COPY --from=builder /hello-app/hello-app ./hello-app
+COPY index.html ./
 
 EXPOSE 8080
-
-CMD ["python", "/app/hello_world.py"]
-
+ENTRYPOINT ["/hello-app"]
