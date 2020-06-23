@@ -16,7 +16,7 @@ spec:
     run: logistics-app
   type: LoadBalancer
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -48,13 +48,13 @@ spec:
           httpGet:
             path: /
             port: 8080
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 8080
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
         env:
           - name: message
-            value: "Hello Everyone!"
+            value: "Hello Everyone"
         resources:
           limits:
             cpu: "50m"
