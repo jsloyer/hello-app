@@ -10,6 +10,7 @@ import (
 type info struct {
 	Hostname string
 	Message  string
+	Headers  http.Header
 }
 
 func indexHandler(response http.ResponseWriter, request *http.Request) {
@@ -26,6 +27,7 @@ func indexHandler(response http.ResponseWriter, request *http.Request) {
 	p := info{
 		Hostname: hostname,
 		Message:  message,
+		Headers:  request.Header,
 	}
 
 	tmplt.Execute(response, p)

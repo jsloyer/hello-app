@@ -8,6 +8,10 @@
     <h1>Hello World </h1>
     <h2>Hostname:&nbsp;{{.Hostname}}</h2>
     <h2>{{.Message}}</h2>
+    <h3>Request Headers</h3>
+    {{ range $key, $value := .Headers }}
+    <li><strong>{{ $key }}</strong>: {{ $value }}</li>
+    {{ end }}
 </body>
 
 </html>
